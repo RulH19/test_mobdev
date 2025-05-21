@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_mobdev/screen/login_screen.dart';
 
 import 'package:test_mobdev/screen/on_board_screen.dart';
 
@@ -13,7 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: Colors.black),
-      home: Scaffold(body: OnBoardScreen()),
+      home: Scaffold(body: LoginScreen()),
     );
   }
 }

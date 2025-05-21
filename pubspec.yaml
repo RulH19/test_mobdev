@@ -26,5 +26,6 @@ flutter:
     - assets/svg/animasi-1.svg
     - assets/svg/animasi-2.svg
     - assets/svg/animasi-3.svg
+    - assets/svg/logo-login.svg
     - assets/svg/icon-courses.svg
     - assets/svg/icon-lesson.svg
