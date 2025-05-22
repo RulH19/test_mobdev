@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CardAudio extends StatelessWidget {
-  const CardAudio({super.key});
+  String imageUrl;
+  String title;
+  String artist;
+  CardAudio({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.artist,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -9,22 +17,20 @@ class CardAudio extends StatelessWidget {
       width: 375,
       height: 90,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(12),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-            child: Image.asset(
-              'assets/image/logo.png',
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              imageUrl,
               width: 64,
               height: 64,
               fit: BoxFit.cover,
             ),
           ),
+
           const SizedBox(width: 16),
 
           Column(
@@ -32,8 +38,10 @@ class CardAudio extends StatelessWidget {
             children: [
               SizedBox(
                 width: 185,
-                child: const Text(
-                  "Good to Great",
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -41,11 +49,13 @@ class CardAudio extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               SizedBox(
                 width: 185,
-                child: const Text(
-                  "by Deena Roberts",
+                child: Text(
+                  artist,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.white70, fontSize: 14),
                 ),
               ),

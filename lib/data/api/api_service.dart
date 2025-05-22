@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:test_mobdev/data/response/audio_response.dart';
 import 'package:test_mobdev/data/response/course_response.dart';
 import 'package:test_mobdev/data/response/login_response.dart';
 import 'package:test_mobdev/data/response/login_result.dart';
@@ -43,6 +44,21 @@ class ApiService {
       final data = response.data as List;
       log(data.toString());
       return data.map((e) => CourseResponse.fromJson(e)).toList();
+    } catch (e) {
+      log('Error fetching courses: $e');
+      return [];
+    }
+  }
+
+  Future<List<AudioResponse>> fetchAudio() async {
+    try {
+      final response = await _dio.get(
+        '$_baseUrl/audio?\$lookup=*',
+        options: Options(headers: {'Content-Type': 'application/json'}),
+      );
+      final data = response.data as List;
+      log(data.toString());
+      return data.map((e) => AudioResponse.fromJson(e)).toList();
     } catch (e) {
       log('Error fetching courses: $e');
       return [];
