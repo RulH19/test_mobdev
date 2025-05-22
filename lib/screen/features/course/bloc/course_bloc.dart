@@ -1,13 +1,20 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
-part 'course_event.dart';
-part 'course_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_mobdev/data/api/api_service.dart';
+import 'package:test_mobdev/screen/features/course/bloc/course_event.dart';
+import 'package:test_mobdev/screen/features/course/bloc/course_state.dart';
 
 class CourseBloc extends Bloc<CourseEvent, CourseState> {
-  CourseBloc() : super(CourseInitial()) {
-    on<CourseEvent>((event, emit) {
-      // TODO: implement event handler
+  final ApiService apiService;
+
+  CourseBloc(this.apiService) : super(CourseInitial()) {
+    on<FetchCourses>((event, emit) async {
+      emit(CourseLoading());
+      try {
+        final courses = await apiService.fetchCourse();
+        emit(CourseSuccess(courses));
+      } catch (e) {
+        emit(CourseFailure(e.toString()));
+      }
     });
   }
 }

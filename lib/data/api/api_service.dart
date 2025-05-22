@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:test_mobdev/data/response/course_response.dart';
 import 'package:test_mobdev/data/response/login_response.dart';
 import 'package:test_mobdev/data/response/login_result.dart';
+import 'dart:developer';
 
 class ApiService {
   final Dio _dio = Dio();
@@ -29,6 +31,21 @@ class ApiService {
       );
     } catch (e) {
       return LoginResult.failure('Unexpected error: $e');
+    }
+  }
+
+  Future<List<CourseResponse>> fetchCourse() async {
+    try {
+      final response = await _dio.get(
+        '$_baseUrl/courses?\$lookup=*',
+        options: Options(headers: {'Content-Type': 'application/json'}),
+      );
+      final data = response.data as List;
+      log(data.toString());
+      return data.map((e) => CourseResponse.fromJson(e)).toList();
+    } catch (e) {
+      log('Error fetching courses: $e');
+      return [];
     }
   }
 }
