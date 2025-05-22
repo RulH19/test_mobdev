@@ -37,3 +37,5 @@ flutter:
     - assets/svg/icon-lesson.svg
     - assets/svg/icon-home.svg
     - assets/svg/icon-profile.svg
+    - assets/svg/filter.svg
+    - assets/svg/menu.svg

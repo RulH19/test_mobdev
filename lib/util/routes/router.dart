@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:test_mobdev/screen/features/audio/course_screen.dart';
+import 'package:test_mobdev/screen/features/audio/audio_screen.dart';
 import 'package:test_mobdev/screen/features/course/pages/course_screen.dart';
 import 'package:test_mobdev/screen/features/home/pages/home_screen.dart';
 import 'package:test_mobdev/screen/features/login/pages/login_screen.dart';
