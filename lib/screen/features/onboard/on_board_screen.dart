@@ -1,7 +1,8 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
 import 'package:test_mobdev/util/widgets/card_carosel.dart' show CardCarosel;
 
@@ -78,8 +79,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
           _currentPage == _cards.length - 1
               ? ElevatedButton(
                 onPressed: () {
-                  // Navigasi ke halaman login
-                  Navigator.pushReplacementNamed(context, '/login');
+                  context.goNamed(RouteName.login);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFC51011),

@@ -10,8 +10,8 @@ String? cekFormatEmail(String email) {
 String? cekPassword(String cekPassword) {
   if (cekPassword.isEmpty) {
     return "Password wajib diisi";
-  } else if (cekPassword.length < 8) {
-    return "Password minimal 8 karakter";
+  } else if (cekPassword.length < 4) {
+    return "Password minimal 4 karakter";
   }
   return null;
 }
