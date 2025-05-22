@@ -1,7 +1,10 @@
 import 'package:go_router/go_router.dart';
+import 'package:test_mobdev/screen/features/audio/course_screen.dart';
+import 'package:test_mobdev/screen/features/course/pages/course_screen.dart';
 import 'package:test_mobdev/screen/features/home/pages/home_screen.dart';
 import 'package:test_mobdev/screen/features/login/pages/login_screen.dart';
 import 'package:test_mobdev/screen/features/onboard/on_board_screen.dart';
+import 'package:test_mobdev/util/widgets/bottom_navigation.dart';
 part 'route_name.dart';
 
 final router = GoRouter(
@@ -21,6 +24,23 @@ final router = GoRouter(
       path: '/home',
       name: RouteName.home,
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/bottomNavigation',
+      name: RouteName.bottomNavigation,
+      builder: (context, state) => const BottomNavigation(),
+      routes: [
+        GoRoute(
+          path: '/courses',
+          name: RouteName.courses,
+          builder: (context, state) => const CourseScreen(),
+        ),
+        GoRoute(
+          path: '/audioBook',
+          name: RouteName.audioBook,
+          builder: (context, state) => const AudioScreen(),
+        ),
+      ],
     ),
   ],
 );

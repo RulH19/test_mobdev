@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.green,
                         ),
                       );
-                      context.goNamed(RouteName.home);
+                      context.goNamed(RouteName.bottomNavigation);
                     } else if (state is LoginFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -192,18 +192,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    context.goNamed(RouteName.home);
+                    context.goNamed(RouteName.bottomNavigation);
                   },
                   child: Container(
                     height: 48,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white, // warna border
-                        width: 1, // ketebalan border
-                      ),
-                      borderRadius: BorderRadius.circular(
-                        8,
-                      ), // opsional: sudut melengkung
+                      border: Border.all(color: Colors.white, width: 1),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
                       child: Text(
