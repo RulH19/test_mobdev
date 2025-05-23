@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -35,8 +35,8 @@ class _AudioScreenState extends State<AudioScreen> {
         title: Text(
           'Audio Book',
           style: AppTyphography.headlineHigh.copyWith(
-            fontSize: 16,
-            height: 1.5,
+            fontSize: 16.sp,
+            height: 1.5.sp,
             letterSpacing: 0,
             fontWeight: FontWeight.w500,
           ),
@@ -54,65 +54,64 @@ class _AudioScreenState extends State<AudioScreen> {
               context.goNamed(RouteName.bottomNavigation);
             },
             child: Padding(
-              padding: const EdgeInsets.all(18.0),
+              padding: EdgeInsets.all(18.4),
               child: SvgPicture.asset(
                 'assets/svg/menu.svg',
-                width: 24,
-                height: 24,
+                width: 24.w,
+                height: 24.h,
               ),
             ),
           ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(26),
+        padding: EdgeInsets.all(26.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 343,
-              height: 48,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              width: 343.w,
+              height: 48.h,
+              padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 12.w),
               decoration: BoxDecoration(
                 color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 border: Border.all(color: Colors.white, width: 1),
               ),
               child: Row(
                 children: [
                   Icon(Icons.search, color: Color(0xFF787777)),
-                  SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Text(
                     "Search Keywords",
                     style: AppTyphography.kontenHigh.copyWith(
-                      fontSize: 16,
-                      height: 2,
+                      fontSize: 16.sp,
+                      height: 2.h,
                       letterSpacing: 0.15,
                       fontWeight: FontWeight.w400,
                       color: Color(0xFF787777),
                     ),
                   ),
-                  SizedBox(width: 150),
+                  SizedBox(width: 100.w),
                   SvgPicture.asset(
                     'assets/svg/filter.svg',
-                    width: 24,
-                    height: 24,
+                    width: 24.w,
+                    height: 24.h,
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 5.h),
             Text(
               'Best-Sellers',
               style: AppTyphography.headlineHigh.copyWith(
-                fontSize: 20,
-                height: 2,
+                fontSize: 20.sp,
+                height: 2.h,
                 letterSpacing: 0.15,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 16),
             BlocBuilder<AudioBloc, AudioState>(
               builder: (context, state) {
                 if (state is AudioLoading) {
@@ -139,19 +138,19 @@ class _AudioScreenState extends State<AudioScreen> {
                 }
               },
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 32.h),
 
             Text(
               'More Books',
               style: AppTyphography.headlineHigh.copyWith(
-                fontSize: 20,
-                height: 2,
+                fontSize: 20.sp,
+                height: 2.sp,
                 letterSpacing: 0.15,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 10.h),
             BlocBuilder<AudioBloc, AudioState>(
               builder: (context, state) {
                 if (state is AudioLoading) {

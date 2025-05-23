@@ -6,6 +6,7 @@ import 'package:test_mobdev/screen/features/course/pages/course_screen.dart';
 import 'package:test_mobdev/screen/features/home/pages/home_screen.dart';
 import 'package:test_mobdev/screen/features/profile/pages/profile_screen.dart';
 import 'bottom_nav_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({super.key});
@@ -27,7 +28,7 @@ class BottomNavigation extends StatelessWidget {
         bottomNavigationBar: BlocBuilder<BottomNavCubit, int>(
           builder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 10.w),
               child: BottomNavigationBar(
                 backgroundColor: Color(0xFF0D0D0E),
                 currentIndex: index,
@@ -39,8 +40,8 @@ class BottomNavigation extends StatelessWidget {
                 items: [
                   BottomNavigationBarItem(
                     icon: SizedBox(
-                      height: 24,
-                      width: 24,
+                      height: 24.h,
+                      width: 24.w,
                       child: SvgPicture.asset(
                         'assets/svg/icon-home.svg',
                         colorFilter: ColorFilter.mode(
@@ -54,8 +55,8 @@ class BottomNavigation extends StatelessWidget {
                   ),
                   BottomNavigationBarItem(
                     icon: SizedBox(
-                      height: 24,
-                      width: 24,
+                      height: 24.h,
+                      width: 24.w,
                       child: SvgPicture.asset(
                         'assets/svg/icon-courses.svg',
                         colorFilter: ColorFilter.mode(
@@ -69,8 +70,8 @@ class BottomNavigation extends StatelessWidget {
                   ),
                   BottomNavigationBarItem(
                     icon: SizedBox(
-                      height: 24,
-                      width: 24,
+                      height: 24.h,
+                      width: 24.w,
                       child: SvgPicture.asset(
                         'assets/svg/icon-profile.svg',
                         colorFilter: ColorFilter.mode(

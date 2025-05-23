@@ -9,6 +9,7 @@ import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
 import 'package:test_mobdev/util/widgets/card_course.dart';
 import 'package:test_mobdev/util/widgets/tag_item.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});
@@ -33,8 +34,8 @@ class _CourseScreenState extends State<CourseScreen> {
         title: Text(
           'Courses',
           style: AppTyphography.headlineHigh.copyWith(
-            fontSize: 16,
-            height: 1.5,
+            fontSize: 16.sp,
+            height: 1.5.sp,
             letterSpacing: 0,
             fontWeight: FontWeight.w500,
           ),
@@ -52,11 +53,11 @@ class _CourseScreenState extends State<CourseScreen> {
               context.goNamed(RouteName.bottomNavigation);
             },
             child: Padding(
-              padding: const EdgeInsets.all(18.0),
+              padding: EdgeInsets.all(18.r),
               child: SvgPicture.asset(
                 'assets/svg/menu.svg',
-                width: 24,
-                height: 24,
+                width: 24.h,
+                height: 24.h,
               ),
             ),
           ),
@@ -70,50 +71,53 @@ class _CourseScreenState extends State<CourseScreen> {
             return Column(
               children: [
                 Container(
-                  width: 343,
-                  height: 48,
-                  margin: EdgeInsets.symmetric(horizontal: 26),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  width: 343.w,
+                  height: 48.h,
+                  margin: EdgeInsets.symmetric(horizontal: 26.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.h,
+                    vertical: 12.w,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(color: Colors.white, width: 1),
                   ),
                   child: Row(
                     children: [
                       Icon(Icons.search, color: Color(0xFF787777)),
-                      SizedBox(width: 10),
+                      SizedBox(width: 10.w),
                       Text(
                         "Title, mentor, or keywords...",
                         style: AppTyphography.kontenHigh.copyWith(
-                          fontSize: 16,
-                          height: 2,
+                          fontSize: 16.sp,
+                          height: 2.sp,
                           letterSpacing: 0.15,
                           fontWeight: FontWeight.w400,
                           color: Color(0xFF787777),
                         ),
                       ),
-                      SizedBox(width: 90),
+                      SizedBox(width: 50.w),
                       SvgPicture.asset(
                         'assets/svg/filter.svg',
-                        width: 24,
-                        height: 24,
+                        width: 24.w,
+                        height: 24.h,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TagItem(text: 'For You'),
-                    SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     TagItem(text: 'Recent'),
-                    SizedBox(width: 8),
-                    TagItem(text: 'Trending', width: 85),
-                    SizedBox(width: 8),
-                    TagItem(text: 'Technology', width: 102),
-                    SizedBox(width: 8),
+                    SizedBox(width: 8.w),
+                    TagItem(text: 'Trending', width: 85.w),
+                    SizedBox(width: 8.w),
+                    TagItem(text: 'Technology', width: 90.w),
+                    SizedBox(width: 8.w),
                   ],
                 ),
                 Expanded(

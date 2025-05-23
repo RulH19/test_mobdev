@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardCourse extends StatelessWidget {
   final String author;
@@ -18,22 +19,25 @@ class CardCourse extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 100,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 20),
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+          height: 90.h,
+          width: 330.w,
+          margin: EdgeInsets.symmetric(vertical: 20.w),
+          padding: EdgeInsets.all(4.r),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.r),
+            color: Colors.blue,
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(6.r),
                     child: Image.network(
                       imageUrl,
-                      width: 88,
-                      height: 88,
+                      width: 77.w,
+                      height: 77.h,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -52,7 +56,7 @@ class CardCourse extends StatelessWidget {
                       child: Text(
                         "New",
                         style: AppTyphography.headlineSmall.copyWith(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           height: 1.5,
                           letterSpacing: 0,
                           fontWeight: FontWeight.w500,
@@ -63,63 +67,63 @@ class CardCourse extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 220,
+                    width: 220.w,
                     child: Text(
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTyphography.headlineSmall.copyWith(
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         height: 1.5,
                         letterSpacing: 0,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 5.h),
 
                   Row(
                     children: [
-                      const CircleAvatar(
-                        radius: 10,
+                      CircleAvatar(
+                        radius: 10.r,
                         backgroundImage: AssetImage('assets/image/logo.png'),
                       ),
-                      const SizedBox(width: 6),
+                      SizedBox(width: 6.w),
                       Text(
                         author,
                         style: AppTyphography.kontenSmall.copyWith(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           height: 1.5,
                           letterSpacing: 0,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(width: 58),
+                      SizedBox(width: 58.w),
 
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.h,
+                          vertical: 4.w,
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.tealAccent),
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(6.r),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Beginner",
                           style: TextStyle(
                             color: Colors.tealAccent,
-                            fontSize: 10,
+                            fontSize: 10.sp,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.flag, size: 14, color: Colors.white),
+                      SizedBox(width: 8.w),
+                      Icon(Icons.flag, size: 14.w, color: Colors.white),
                     ],
                   ),
                   const SizedBox(height: 6),
@@ -127,49 +131,63 @@ class CardCourse extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.h,
+                          vertical: 4.w,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.grey[900],
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(6.r),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
                             Icon(
                               Icons.design_services,
                               color: Colors.white,
-                              size: 12,
+                              size: 12.w,
                             ),
                             SizedBox(width: 4),
                             Text(
                               "Design",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 10,
+                                fontSize: 10.sp,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 70),
+                      SizedBox(width: 70.w),
 
                       Row(
-                        children: const [
-                          Icon(Icons.menu_book, color: Colors.white, size: 14),
-                          SizedBox(width: 4),
+                        children: [
+                          Icon(
+                            Icons.menu_book,
+                            color: Colors.white,
+                            size: 14.sp,
+                          ),
+                          SizedBox(width: 4.w),
                           Text(
                             "16",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                            ),
                           ),
 
-                          SizedBox(width: 12),
-                          Icon(Icons.schedule, color: Colors.white, size: 14),
-                          SizedBox(width: 4),
+                          SizedBox(width: 12.w),
+                          Icon(
+                            Icons.schedule,
+                            color: Colors.white,
+                            size: 14.sp,
+                          ),
+                          SizedBox(width: 4.w),
                           Text(
                             "1:20:10",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                            ),
                           ),
                         ],
                       ),
@@ -181,7 +199,7 @@ class CardCourse extends StatelessWidget {
           ),
         ),
         Container(
-          width: 343,
+          width: 343.w,
           height: 1,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -189,15 +207,15 @@ class CardCourse extends StatelessWidget {
               end: Alignment.centerRight,
               colors: [
                 Colors.transparent,
-                Colors.white.withOpacity(0.3),
-                Colors.white.withOpacity(0.7),
-                Colors.white.withOpacity(0.3),
+                Colors.white.withAlpha(80),
+                Colors.white.withAlpha(150),
+                Colors.white.withAlpha(80),
                 Colors.transparent,
               ],
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withAlpha(80),
                 blurRadius: 6,
                 spreadRadius: 1,
               ),

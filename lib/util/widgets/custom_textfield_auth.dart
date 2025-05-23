@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFieldAuth extends StatefulWidget {
   const CustomTextFieldAuth({
@@ -32,7 +33,7 @@ class _CustomTextFieldAuthState extends State<CustomTextFieldAuth> {
       children: [
         TextFormField(
           style: AppTyphography.kontenHigh.copyWith(
-            fontSize: 18,
+            fontSize: 16.sp,
             color: Colors.white,
             height: 1,
             letterSpacing: 0,
@@ -43,20 +44,20 @@ class _CustomTextFieldAuthState extends State<CustomTextFieldAuth> {
           obscureText: widget.isPassword ? _obsecureText : false,
           decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xFF787777), width: 2),
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: Color(0xFF787777), width: 2.w),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xFF787777), width: 2),
+              borderSide: BorderSide(color: Color(0xFF787777), width: 2.w),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xFF787777), width: 2),
+              borderSide: BorderSide(color: Color(0xFF787777), width: 2.w),
             ),
             hintText: widget.hintText,
             hintStyle: AppTyphography.kontenHigh.copyWith(
-              fontSize: 18,
+              fontSize: 16.sp,
               color: Color(0xFF787777),
               height: 1,
               letterSpacing: 0,
@@ -78,7 +79,7 @@ class _CustomTextFieldAuthState extends State<CustomTextFieldAuth> {
                     : null,
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 20.h),
       ],
     );
   }

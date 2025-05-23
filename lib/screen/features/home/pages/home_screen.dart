@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
@@ -18,25 +18,22 @@ class HomeScreen extends StatelessWidget {
             children: [
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 40,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 30.w),
                 color: Color(0xFFC51011),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
+                  padding: EdgeInsets.only(top: 30.h),
                   child: Image.asset(
                     'assets/image/logo.png',
-                    width: 152,
-                    height: 24,
+                    width: 145.w,
+                    height: 24.h,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 46),
+              SizedBox(height: 50.h),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20.h),
                 child: Row(
                   children: [
                     MenuIconItem(
@@ -64,9 +61,9 @@ class HomeScreen extends StatelessWidget {
             top: 110,
             left: 16,
             child: Container(
-              width: 343,
-              height: 48,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              width: 330.w,
+              height: 48.h,
+              padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 12.w),
               decoration: BoxDecoration(
                 color: Color(0xFF222326),
                 borderRadius: BorderRadius.circular(12),
@@ -74,12 +71,12 @@ class HomeScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(Icons.search, color: Color(0xFF787777)),
-                  SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Text(
                     "Courses, Insights or Events",
                     style: AppTyphography.kontenHigh.copyWith(
-                      fontSize: 16,
-                      height: 2,
+                      fontSize: 16.sp,
+                      height: 2.sp,
                       letterSpacing: 0.15,
                       fontWeight: FontWeight.w400,
                       color: Color(0xFF787777),

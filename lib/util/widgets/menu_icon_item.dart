@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -22,20 +23,20 @@ class MenuIconItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 36,
-            height: 36,
-            padding: const EdgeInsets.all(8),
+            width: 36.w,
+            height: 36.w,
+            padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               color: Color(0xFFC51011),
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(28.r),
             ),
-            child: SvgPicture.asset(iconPath, width: 20, height: 20),
+            child: SvgPicture.asset(iconPath, width: 20.w, height: 20.h),
           ),
           const SizedBox(height: 6),
           Text(
             label,
             style: AppTyphography.headlineSmall.copyWith(
-              fontSize: 12,
+              fontSize: 12.sp,
               height: 1.5,
               letterSpacing: 0,
               fontWeight: FontWeight.w400,
