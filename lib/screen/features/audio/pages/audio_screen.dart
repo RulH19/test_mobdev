@@ -92,7 +92,7 @@ class _AudioScreenState extends State<AudioScreen> {
                       color: Color(0xFF787777),
                     ),
                   ),
-                  SizedBox(width: 100.w),
+                  SizedBox(width: 80.w),
                   SvgPicture.asset(
                     'assets/svg/filter.svg',
                     width: 24.w,
@@ -127,6 +127,11 @@ class _AudioScreenState extends State<AudioScreen> {
                           imageUrl: audio.thumbnailUrl,
                           title: audio.title,
                           artist: audio.artist,
+                          onTap:
+                              () => context.goNamed(
+                                RouteName.audioBookPlayer,
+                                extra: audio,
+                              ),
                         );
                       },
                     ),
@@ -165,6 +170,11 @@ class _AudioScreenState extends State<AudioScreen> {
                           imageUrl: audio.thumbnailUrl,
                           title: audio.title,
                           artist: audio.artist,
+                          onTap:
+                              () => context.goNamed(
+                                RouteName.audioBookPlayer,
+                                extra: audio,
+                              ),
                         );
                       },
                     ),

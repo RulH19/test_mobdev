@@ -90,14 +90,14 @@ class _CourseScreenState extends State<CourseScreen> {
                       Text(
                         "Title, mentor, or keywords...",
                         style: AppTyphography.kontenHigh.copyWith(
-                          fontSize: 16.sp,
+                          fontSize: 15.sp,
                           height: 2.sp,
                           letterSpacing: 0.15,
                           fontWeight: FontWeight.w400,
                           color: Color(0xFF787777),
                         ),
                       ),
-                      SizedBox(width: 50.w),
+                      SizedBox(width: 20.w),
                       SvgPicture.asset(
                         'assets/svg/filter.svg',
                         width: 24.w,

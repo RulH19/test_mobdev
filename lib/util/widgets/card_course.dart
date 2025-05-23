@@ -23,10 +23,7 @@ class CardCourse extends StatelessWidget {
           width: 330.w,
           margin: EdgeInsets.symmetric(vertical: 20.w),
           padding: EdgeInsets.all(4.r),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.r),
-            color: Colors.blue,
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.r)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,8 +33,8 @@ class CardCourse extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6.r),
                     child: Image.network(
                       imageUrl,
-                      width: 77.w,
-                      height: 77.h,
+                      width: 70.w,
+                      height: 70.h,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -67,7 +64,7 @@ class CardCourse extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: 16.w),
+              SizedBox(width: 10.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,7 +75,7 @@ class CardCourse extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTyphography.headlineSmall.copyWith(
-                        fontSize: 14.sp,
+                        fontSize: 12.sp,
                         height: 1.5,
                         letterSpacing: 0,
                         fontWeight: FontWeight.w600,
@@ -103,7 +100,7 @@ class CardCourse extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(width: 58.w),
+                      SizedBox(width: 55.w),
 
                       Container(
                         padding: EdgeInsets.symmetric(

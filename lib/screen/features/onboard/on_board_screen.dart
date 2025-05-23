@@ -20,23 +20,23 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
     CardCarosel(
       assets: 'assets/svg/animasi-1.svg',
       label: 'Image 1',
-      headline: 'Upgrade skills,\nShow off credentials!',
+      headline: 'Upgrade skills, Show off credentials!',
       description:
-          'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Etiam eu turpis  accumsan.',
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis  accumsan.',
     ),
     CardCarosel(
       assets: 'assets/svg/animasi-2.svg',
       label: 'Image 2',
-      headline: 'Gain Insights and read\nTrending Articles',
+      headline: 'Gain Insights and read Trending Articles',
       description:
-          'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Etiam eu turpis serun',
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis serun',
     ),
     CardCarosel(
       assets: 'assets/svg/animasi-3.svg',
       label: 'Image 3',
-      headline: 'Attend Events and\nExpand your network!',
+      headline: 'Attend Events and Expand your network!',
       description:
-          'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Etiam eu turpis amet',
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis amet',
     ),
   ];
 

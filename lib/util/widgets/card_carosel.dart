@@ -38,6 +38,7 @@ class CardCarosel extends StatelessWidget {
             Text(
               headline,
               style: AppTyphography.headlineHigh.copyWith(
+                fontSize: 24.sp,
                 height: 1.5,
                 letterSpacing: 2,
               ),
@@ -46,8 +47,9 @@ class CardCarosel extends StatelessWidget {
             Text(
               description,
               style: AppTyphography.kontenHigh.copyWith(
-                height: 1.5,
-                letterSpacing: 2,
+                fontSize: 20.sp,
+                height: 1.3,
+                letterSpacing: 1,
               ),
             ),
           ],

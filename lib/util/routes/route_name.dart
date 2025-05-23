@@ -7,4 +7,5 @@ abstract class RouteName {
   static const onboard = 'onboard';
   static const courses = 'courses';
   static const audioBook = 'audioBook';
+  static const audioBookPlayer = 'audioBookPlayer';
 }

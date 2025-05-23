@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:test_mobdev/data/response/audio_response.dart';
+import 'package:test_mobdev/screen/features/audio/pages/audio_play_screen.dart';
 import 'package:test_mobdev/screen/features/audio/pages/audio_screen.dart';
 import 'package:test_mobdev/screen/features/course/pages/course_screen.dart';
 import 'package:test_mobdev/screen/features/home/pages/home_screen.dart';
@@ -39,6 +41,16 @@ final router = GoRouter(
           path: '/audioBook',
           name: RouteName.audioBook,
           builder: (context, state) => const AudioScreen(),
+          routes: [
+            GoRoute(
+              path: '/audioBookPlayer',
+              name: RouteName.audioBookPlayer,
+              builder: (context, state) {
+                final audioResponse = state.extra as AudioResponse;
+                return AudioPlayScreen(audioResponse: audioResponse);
+              },
+            ),
+          ],
         ),
       ],
     ),

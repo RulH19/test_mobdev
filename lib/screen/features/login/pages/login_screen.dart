@@ -37,10 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(24.w, 80.h, 24.w, 0.h),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(24.w, 20.h, 24.w, 0.h),
 
-          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
