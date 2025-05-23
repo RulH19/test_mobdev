@@ -9,12 +9,12 @@ class CardCarosel extends StatelessWidget {
   String headline;
   String description;
   CardCarosel({
-    Key? key,
+    super.key,
     required this.assets,
     required this.label,
     required this.headline,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

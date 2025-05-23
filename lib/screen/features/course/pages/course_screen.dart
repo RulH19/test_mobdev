@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:test_mobdev/screen/features/course/bloc/course_bloc.dart';
 import 'package:test_mobdev/screen/features/course/bloc/course_event.dart';
 import 'package:test_mobdev/screen/features/course/bloc/course_state.dart';
-import 'package:test_mobdev/screen/features/course/pages/detail_course_screen.dart';
 import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
 import 'package:test_mobdev/util/widgets/card_course.dart';

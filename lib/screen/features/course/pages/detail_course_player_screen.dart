@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
 import 'package:video_player/video_player.dart';
 
