@@ -6,6 +6,8 @@ abstract class RouteName {
   static const login = 'login';
   static const onboard = 'onboard';
   static const courses = 'courses';
+  static const courseDetail = 'courseDetail';
+  static const courseDetailPlayer = 'courseDetailPlayer';
   static const audioBook = 'audioBook';
   static const audioBookPlayer = 'audioBookPlayer';
 }
