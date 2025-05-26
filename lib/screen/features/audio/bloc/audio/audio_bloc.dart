@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_mobdev/data/api/api_service.dart';
-import 'package:test_mobdev/screen/features/audio/bloc/audio_event.dart';
-import 'package:test_mobdev/screen/features/audio/bloc/audio_state.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio/audio_event.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio/audio_state.dart';
 
 class AudioBloc extends Bloc<AudioEvent, AudioState> {
   final ApiService apiService;

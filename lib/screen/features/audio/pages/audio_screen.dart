@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:test_mobdev/data/response/audio_response.dart';
 
-import 'package:test_mobdev/screen/features/audio/bloc/audio_bloc.dart';
-import 'package:test_mobdev/screen/features/audio/bloc/audio_event.dart';
-import 'package:test_mobdev/screen/features/audio/bloc/audio_state.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio/audio_bloc.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio/audio_event.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio/audio_state.dart';
+import 'package:test_mobdev/util/routes/audio_argument.dart';
 import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
 import 'package:test_mobdev/util/widgets/card_audio.dart';
@@ -28,6 +32,56 @@ class _AudioScreenState extends State<AudioScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dummyData = [
+      AudioResponse(
+        id: 'manual_1',
+        title: 'Pertama Audio Title',
+        artist: 'Pertama Artist',
+        description: 'Description manual',
+        isPremium: 'false',
+        language: 'en',
+        audioUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/5 Menit Video Tutorial. - Teknik Presentasi Yang Baik dan Benar (Episode 2) (320 kbps)-NqUnlHtG.mp3",
+        thumbnailUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/9782384391288-SAugClki.jpg",
+      ),
+      AudioResponse(
+        id: 'manual_1',
+        title: 'Kedua Audio Title',
+        artist: 'Kedua Artist',
+        description: 'Description manual',
+        isPremium: 'false',
+        language: 'en',
+        audioUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/5 Menit Video Tutorial. - Teknik Presentasi Yang Baik dan Benar (Episode 2) (320 kbps)-NqUnlHtG.mp3",
+        thumbnailUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/9782384391288-SAugClki.jpg",
+      ),
+      AudioResponse(
+        id: 'manual_1',
+        title: 'Ketiga Audio Title',
+        artist: 'Ketiga Artist',
+        description: 'Description manual',
+        isPremium: 'false',
+        language: 'en',
+        audioUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/5 Menit Video Tutorial. - Teknik Presentasi Yang Baik dan Benar (Episode 2) (320 kbps)-NqUnlHtG.mp3",
+        thumbnailUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/9782384391288-SAugClki.jpg",
+      ),
+      AudioResponse(
+        id: 'manual_1',
+        title: 'Keempat Audio Title',
+        artist: 'Keempat Artist',
+        description: 'Description manual',
+        isPremium: 'false',
+        language: 'en',
+        audioUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/5 Menit Video Tutorial. - Teknik Presentasi Yang Baik dan Benar (Episode 2) (320 kbps)-NqUnlHtG.mp3",
+        thumbnailUrl:
+            "https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/9782384391288-SAugClki.jpg",
+      ),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF0D0D0E),
@@ -117,21 +171,27 @@ class _AudioScreenState extends State<AudioScreen> {
                 if (state is AudioLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is AudioSuccess) {
+                  final combinedDataAudio = [...state.data, ...dummyData];
                   return Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 1,
+                      itemCount: combinedDataAudio.length,
                       itemBuilder: (context, index) {
-                        final audio = state.data[0];
+                        final audio = combinedDataAudio[index];
                         return CardBestSellerAudio(
                           imageUrl: audio.thumbnailUrl,
                           title: audio.title,
                           artist: audio.artist,
-                          onTap:
-                              () => context.goNamed(
-                                RouteName.audioBookPlayer,
-                                extra: audio,
+                          onTap: () {
+                            context.goNamed(
+                              RouteName.audioBookPlayer,
+                              extra: AudioArgument(
+                                audioList: combinedDataAudio,
+                                currentIndex: index,
                               ),
+                            );
+                            log('${combinedDataAudio[index].audioUrl}');
+                          },
                         );
                       },
                     ),
@@ -161,11 +221,13 @@ class _AudioScreenState extends State<AudioScreen> {
                 if (state is AudioLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is AudioSuccess) {
+                  final combinedDataAudio = [...state.data, ...dummyData];
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: 1,
+                      scrollDirection: Axis.vertical,
+                      itemCount: combinedDataAudio.length,
                       itemBuilder: (context, index) {
-                        final audio = state.data[0];
+                        final audio = combinedDataAudio[index];
                         return CardAudio(
                           imageUrl: audio.thumbnailUrl,
                           title: audio.title,
@@ -173,7 +235,10 @@ class _AudioScreenState extends State<AudioScreen> {
                           onTap:
                               () => context.goNamed(
                                 RouteName.audioBookPlayer,
-                                extra: audio,
+                                extra: AudioArgument(
+                                  audioList: combinedDataAudio,
+                                  currentIndex: index,
+                                ),
                               ),
                         );
                       },

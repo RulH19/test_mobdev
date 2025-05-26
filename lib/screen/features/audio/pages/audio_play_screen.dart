@@ -1,77 +1,70 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:just_audio/just_audio.dart';
 
 import 'package:test_mobdev/data/response/audio_response.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio_player/audio_player_qubit.dart';
+import 'package:test_mobdev/screen/features/audio/bloc/audio_player/audio_player_state.dart';
 import 'package:test_mobdev/util/routes/router.dart';
 import 'package:test_mobdev/util/typhography/app_typhography.dart';
+import 'package:test_mobdev/util/validator/validator.dart';
 
 class AudioPlayScreen extends StatefulWidget {
-  AudioResponse audioResponse;
-  AudioPlayScreen({super.key, required this.audioResponse});
+  final List<AudioResponse> audioListResponse;
+  final int currentIndex;
+  const AudioPlayScreen({
+    super.key,
+    required this.audioListResponse,
+    required this.currentIndex,
+  });
 
   @override
   State<AudioPlayScreen> createState() => _AudioPlayScreenState();
 }
 
 class _AudioPlayScreenState extends State<AudioPlayScreen> {
-  final AudioPlayer _player = AudioPlayer();
-  Duration _currentPosition = Duration.zero;
-  Duration _totalDuration = Duration.zero;
-  bool _isPlaying = false;
-  @override
-  void initState() {
-    super.initState();
-    _init();
-
-    _player.playingStream.listen((isPlaying) {
+  late int currentIndex;
+  late AudioResponse currentAudio;
+  void nextAudio() {
+    if (currentIndex < widget.audioListResponse.length - 1) {
       setState(() {
-        _isPlaying = isPlaying;
+        currentIndex++;
+        currentAudio = widget.audioListResponse[currentIndex];
       });
-    });
-  }
-
-  Future<void> _init() async {
-    try {
-      await _player.setUrl(widget.audioResponse.audioUrl!);
-      log('Error loading audio: ${_player.durationStream}');
-
-      _player.durationStream.listen((duration) {
-        if (duration != null) {
-          setState(() {
-            _totalDuration = duration;
-          });
-        }
-      });
-      _player.positionStream.listen((position) {
-        setState(() {
-          _currentPosition = position;
-        });
-      });
-    } catch (e) {
-      log('Error loading audio: $e');
+      playCurrentAudio();
     }
   }
 
-  @override
-  void dispose() {
-    _player.dispose();
-    super.dispose();
+  void prevAudio() {
+    if (currentIndex > 0) {
+      setState(() {
+        currentIndex--;
+        currentAudio = widget.audioListResponse[currentIndex];
+      });
+      playCurrentAudio();
+    }
   }
 
-  String _formatDuration(Duration duration) {
-    final minutes = duration.inMinutes.remainder(60).toString().padLeft(1, '0');
-    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
-    return "$minutes:$seconds";
+  Future<void> playCurrentAudio() async {
+    final cubit = context.read<AudioPlayerQubit>();
+    await cubit.stop(); // Menghentikan pemutaran sebelumnya
+    await cubit.play(currentAudio.audioUrl ?? '');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.currentIndex;
+    currentAudio = widget.audioListResponse[currentIndex];
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AudioPlayerQubit>();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -91,15 +84,17 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
             ),
             SizedBox(
               width: 160.w,
-              child: Text(
-                widget.audioResponse.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTyphography.headlineHigh.copyWith(
-                  fontSize: 16.sp,
-                  height: 1.5.sp,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.w600,
+              child: Center(
+                child: Text(
+                  currentAudio.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTyphography.headlineHigh.copyWith(
+                    fontSize: 16.sp,
+                    height: 1.5.sp,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -109,6 +104,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
+            final cubit = context.read<AudioPlayerQubit>();
+            cubit.stop();
             context.goNamed(RouteName.audioBook);
           },
         ),
@@ -134,7 +131,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: Image.network(
-                widget.audioResponse.thumbnailUrl,
+                currentAudio.thumbnailUrl,
                 height: 380.h,
                 width: 343,
                 fit: BoxFit.fitHeight,
@@ -147,7 +144,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
             child: SizedBox(
               width: 300.w,
               child: Text(
-                widget.audioResponse.title,
+                currentAudio.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTyphography.headlineHigh.copyWith(
@@ -166,7 +163,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                 SizedBox(
                   width: 130.w,
                   child: Text(
-                    '${widget.audioResponse.artist}   - ',
+                    '${currentAudio.artist}   - ',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTyphography.headlineHigh.copyWith(
@@ -230,57 +227,87 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16.r),
             child: Column(
               children: [
-                Slider(
-                  value: _currentPosition.inSeconds.toDouble(),
-                  min: 0,
-                  max: _totalDuration.inSeconds.toDouble(),
-                  onChanged: (value) {
-                    _player.seek(Duration(seconds: value.toInt()));
+                BlocBuilder<AudioPlayerQubit, AudioPlayerState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Slider(
+                          value: state.position.inSeconds.toDouble(),
+                          min: 0,
+                          max: state.duration.inSeconds.toDouble(),
+                          onChanged: (value) {},
+                          activeColor: Colors.white,
+                          inactiveColor: Colors.white30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              durationToTimeString(state.position),
+                              style: TextStyle(color: Colors.white54),
+                            ),
+                            Text(
+                              durationToTimeString(state.duration),
+                              style: TextStyle(color: Colors.white54),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 32.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.share,
+                                color: Colors.white,
+                                size: 36.w,
+                              ),
+                              IconButton(
+                                onPressed: prevAudio,
+                                icon: Icon(
+                                  Icons.skip_previous,
+                                  color: Colors.white,
+                                  size: 36.w,
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  state.isPlay
+                                      ? Icons.pause_circle_filled
+                                      : Icons.play_circle_filled,
+                                  color: Colors.white,
+                                  size: 45.w,
+                                ),
+                                onPressed: () async {
+                                  if (state.isPlay) {
+                                    await cubit.pause();
+                                  } else {
+                                    await cubit.play(
+                                      "${currentAudio.audioUrl}",
+                                    );
+                                  }
+                                },
+                              ),
+                              IconButton(
+                                onPressed: nextAudio,
+                                icon: Icon(
+                                  Icons.skip_next,
+                                  color: Colors.white,
+                                  size: 36.w,
+                                ),
+                              ),
+                              Icon(
+                                Icons.bookmark_border,
+                                color: Colors.white,
+                                size: 36.w,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
                   },
-                  activeColor: Colors.white,
-                  inactiveColor: Colors.white30,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _formatDuration(_currentPosition),
-                      style: TextStyle(color: Colors.white54),
-                    ),
-                    Text(
-                      _formatDuration(_totalDuration),
-                      style: TextStyle(color: Colors.white54),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 32.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(Icons.share, color: Colors.white, size: 36.w),
-                Icon(Icons.skip_previous, color: Colors.white, size: 36.w),
-                IconButton(
-                  icon: Icon(
-                    _isPlaying
-                        ? Icons.pause_circle_filled
-                        : Icons.play_circle_filled,
-                    color: Colors.white,
-                    size: 45.w,
-                  ),
-                  onPressed: () async {
-                    if (_isPlaying) {
-                      await _player.pause();
-                    } else {
-                      await _player.play();
-                    }
-                  },
-                ),
-                Icon(Icons.skip_next, color: Colors.white, size: 36.w),
-                Icon(Icons.bookmark_border, color: Colors.white, size: 36.w),
               ],
             ),
           ),

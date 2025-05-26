@@ -9,10 +9,13 @@ import 'package:test_mobdev/screen/features/course/pages/detail_course_screen.da
 import 'package:test_mobdev/screen/features/home/pages/home_screen.dart';
 import 'package:test_mobdev/screen/features/login/pages/login_screen.dart';
 import 'package:test_mobdev/screen/features/onboard/on_board_screen.dart';
+import 'package:test_mobdev/util/routes/app_navigator_observer.dart';
+import 'package:test_mobdev/util/routes/audio_argument.dart';
 import 'package:test_mobdev/util/widgets/bottom_navigation.dart';
 part 'route_name.dart';
 
 final router = GoRouter(
+  observers: [AppNavigatorObserver()],
   routes: [
     GoRoute(
       path: '/',
@@ -59,6 +62,7 @@ final router = GoRouter(
         ),
         GoRoute(
           path: 'audioBook',
+
           name: RouteName.audioBook,
           builder: (context, state) => const AudioScreen(),
           routes: [
@@ -66,8 +70,11 @@ final router = GoRouter(
               path: 'audioBookPlayer',
               name: RouteName.audioBookPlayer,
               builder: (context, state) {
-                final audioResponse = state.extra as AudioResponse;
-                return AudioPlayScreen(audioResponse: audioResponse);
+                final args = state.extra as AudioArgument;
+                return AudioPlayScreen(
+                  audioListResponse: args.audioList,
+                  currentIndex: args.currentIndex,
+                );
               },
             ),
           ],

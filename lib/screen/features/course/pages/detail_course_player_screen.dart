@@ -51,21 +51,30 @@ class _DetailCoursePlayerScreenState extends State<DetailCoursePlayerScreen> {
         ),
         centerTitle: true,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _controller.value.isPlaying
+                ? _controller.pause()
+                : _controller.play();
+          });
+        },
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+        ),
+      ),
+
       body: SafeArea(
         child: Column(
           children: [
-            FutureBuilder(
-              future: _controller.initialize(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
+            Center(
+              child:
+                  _controller.value.isInitialized
+                      ? AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      )
+                      : Container(),
             ),
 
             const Padding(
