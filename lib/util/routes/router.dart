@@ -54,7 +54,13 @@ final router = GoRouter(
                 GoRoute(
                   path: 'courseDetailPlayer',
                   name: RouteName.courseDetailPlayer,
-                  builder: (context, state) => const DetailCoursePlayerScreen(),
+
+                  builder: (context, state) {
+                    final courseResponse = state.extra as CourseResponse;
+                    return DetailCoursePlayerScreen(
+                      courseResponse: courseResponse,
+                    );
+                  },
                 ),
               ],
             ),

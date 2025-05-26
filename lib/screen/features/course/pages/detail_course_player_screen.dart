@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_mobdev/util/typhography/app_typhography.dart';
 import 'package:video_player/video_player.dart';
 
+import 'package:test_mobdev/data/response/course_response.dart';
+import 'package:test_mobdev/util/typhography/app_typhography.dart';
+
 class DetailCoursePlayerScreen extends StatefulWidget {
-  const DetailCoursePlayerScreen({super.key});
+  CourseResponse courseResponse;
+  DetailCoursePlayerScreen({super.key, required this.courseResponse});
 
   @override
   State<DetailCoursePlayerScreen> createState() =>
@@ -13,8 +18,14 @@ class DetailCoursePlayerScreen extends StatefulWidget {
 
 class _DetailCoursePlayerScreenState extends State<DetailCoursePlayerScreen> {
   late VideoPlayerController _controller;
-
-  @override
+  bool _showControls = true;
+  Timer? _hideTimer;
+  List<String> videoUrls = [
+    'https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/C 01 Intro S 01 Perkenalan-BRgfEBrv.mp4',
+    'https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/C 01 Intro S 01 Perkenalan-BRgfEBrv.mp4',
+    'https://api.kontenbase.com/upload/file/storage/65a0e330fac3f5febba7f7f8/C 01 Intro S 01 Perkenalan-BRgfEBrv.mp4',
+  ];
+  int _currentIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -28,9 +39,47 @@ class _DetailCoursePlayerScreenState extends State<DetailCoursePlayerScreen> {
       });
   }
 
+  Future<void> _loadVideo(int index) async {
+    if (_controller.value.isPlaying) {
+      await _controller.pause();
+    }
+    await _controller.dispose();
+
+    setState(() {
+      _controller = VideoPlayerController.networkUrl(
+          Uri.parse(videoUrls[index]),
+        )
+        ..initialize().then((_) {
+          setState(() {
+            _controller.play();
+            _startHideTimer();
+          });
+        });
+    });
+  }
+
+  void _toggleControls() {
+    setState(() {
+      _showControls = !_showControls;
+      if (_showControls && _controller.value.isPlaying) {
+        _startHideTimer();
+      }
+    });
+  }
+
+  void _startHideTimer() {
+    _hideTimer?.cancel();
+    _hideTimer = Timer(const Duration(seconds: 3), () {
+      setState(() {
+        _showControls = false;
+      });
+    });
+  }
+
   @override
   void dispose() {
     _controller.dispose();
+    _hideTimer?.cancel();
     super.dispose();
   }
 
@@ -51,18 +100,6 @@ class _DetailCoursePlayerScreenState extends State<DetailCoursePlayerScreen> {
         ),
         centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
 
       body: SafeArea(
         child: Column(
@@ -70,14 +107,130 @@ class _DetailCoursePlayerScreenState extends State<DetailCoursePlayerScreen> {
             Center(
               child:
                   _controller.value.isInitialized
-                      ? AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
+                      ? GestureDetector(
+                        onTap: _toggleControls,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            AspectRatio(
+                              aspectRatio: _controller.value.aspectRatio,
+                              child: VideoPlayer(_controller),
+                            ),
+                            if (_showControls)
+                              AnimatedOpacity(
+                                opacity: _showControls ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 300),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.skip_previous, size: 40),
+                                      onPressed:
+                                          _currentIndex > 0
+                                              ? () {
+                                                _currentIndex--;
+                                                _loadVideo(_currentIndex);
+                                              }
+                                              : null,
+                                    ),
+                                    IconButton(
+                                      iconSize: 80,
+                                      icon: Icon(
+                                        _controller.value.isPlaying
+                                            ? Icons.pause_circle_filled
+                                            : Icons.play_circle_filled,
+                                        color: Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (_controller.value.isPlaying) {
+                                            _controller.pause();
+                                          } else {
+                                            _controller.play();
+                                            _startHideTimer();
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.skip_next, size: 40),
+                                      onPressed:
+                                          _currentIndex < videoUrls.length - 1
+                                              ? () {
+                                                _currentIndex++;
+                                                _loadVideo(_currentIndex);
+                                              }
+                                              : null,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
                       )
-                      : Container(),
+                      : Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 200,
+                            color: Colors.black12,
+                            child: Image.network(
+                              widget.courseResponse.imageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.skip_previous, size: 40),
+                                onPressed:
+                                    _currentIndex > 0
+                                        ? () {
+                                          _currentIndex--;
+                                          _loadVideo(_currentIndex);
+                                        }
+                                        : null,
+                              ),
+                              IconButton(
+                                iconSize: 80,
+                                icon: Icon(
+                                  _controller.value.isPlaying
+                                      ? Icons.pause_circle_filled
+                                      : Icons.play_circle_filled,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (_controller.value.isPlaying) {
+                                      _controller.pause();
+                                      _showControls = true;
+                                    } else {
+                                      _controller.play();
+                                      _showControls = true;
+                                      _startHideTimer();
+                                    }
+                                  });
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.skip_next, size: 40),
+                                onPressed:
+                                    _currentIndex < videoUrls.length - 1
+                                        ? () {
+                                          _currentIndex++;
+                                          _loadVideo(_currentIndex);
+                                        }
+                                        : null,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
             ),
 
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +241,8 @@ class _DetailCoursePlayerScreenState extends State<DetailCoursePlayerScreen> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    "Get Started with ChatGPT",
+                    widget.courseResponse.title,
+
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

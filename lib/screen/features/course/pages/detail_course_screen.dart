@@ -179,7 +179,10 @@ class DetailCourseScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                context.pushNamed(RouteName.courseDetailPlayer);
+                context.goNamed(
+                  RouteName.courseDetailPlayer,
+                  extra: courseResponse,
+                );
               },
               child: Container(
                 height: 48.h,
